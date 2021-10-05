@@ -60,6 +60,14 @@ jobs:
           command: |
             git clone $DEVOPS_REPO $DEVOPS_WORKDIR
       - run:
+          name: GraphQL server tests
+          command: |
+            cp $DEVOPS_WORKDIR/environments/cypress .env
+            echo SOCKET_PORT=3001 >> .env
+            yarn dev &
+            curl -4 --retry 30 --retry-connrefused --retry-delay 10 --retry 30 http://localhost:3000/graphql
+            yarn workspace parabol-server test --forceExit
+      - run:
           name: Build Assets
           command: |
             if [ "${CIRCLE_BRANCH}" == "production" ] || [ "${CIRCLE_BRANCH}" == "staging" ] || [ "${CIRCLE_BRANCH}" == "development" ]; then
