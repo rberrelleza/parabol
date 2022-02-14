@@ -1,0 +1,4 @@
+deploy:
+- export HOST=app-$OKTETO_NAMESPACE.ramiro.okteto.dev && envsubst < .okteto/.env.tmpl > .env
+- cat .env
+- okteto stack deploy --build

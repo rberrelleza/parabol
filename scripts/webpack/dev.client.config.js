@@ -54,6 +54,7 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
     port: PORT,
+    allowedHosts: 'all',
     proxy: [
       'sse',
       'sse-ping',
